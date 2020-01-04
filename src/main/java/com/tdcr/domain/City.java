@@ -28,24 +28,13 @@ import javax.persistence.*;
 @Audited
 @AuditTable("CITY_LOG")
 @Table (name = "CITY")
-public class City implements Serializable {
+public class City extends BaseCityEnity implements Serializable {
 	@Transient
 	Random random = new Random();
 
 	@EmbeddedId
 	private CityPK cityPK;
 
-	@Column
-	private String name;
-
-	@Column
-	private String state;
-
-	@Column
-	private String country;
-
-	@Column
-	private String map;
 
 	protected City() {
 	}
@@ -55,35 +44,13 @@ public class City implements Serializable {
 
 		this.cityPK= new CityPK(Long.valueOf(random.ints(0,(50+1)).findFirst().getAsInt())
 				,(""+name.charAt(0)+country.charAt(0)+"".toUpperCase()));
-		this.name = name;
-		this.country = country;
+		setName(name);
+		setCountry(country);
 	}
 
 	public Long getCityId() {
 		return this.cityPK.getCityId();
 	}
-
-
-	public String getName() {
-		return this.name;
-	}
-
-	public String getState() {
-		return this.state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getCountry() {
-		return this.country;
-	}
-
-	public String getMap() {
-		return this.map;
-	}
-
 
 	@Override
 	public String toString() {

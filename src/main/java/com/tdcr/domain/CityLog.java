@@ -10,22 +10,13 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "CITY_LOG")
-public class CityLog extends CityLogPK implements Serializable {
+public class CityLog extends BaseCityEnity implements Serializable {
 
 	@OneToOne
-	@JoinColumn(name = "rev")
+	@JoinColumn(name = "REV",insertable = false ,updatable = false)
 	private UserRevEntity userRevEntity;
 
-	@Column
-	private String name;
-
-	@Column
-	private String state;
-
-	@Column
-	private String country;
-
-	@Column
-	private String map;
+	@EmbeddedId
+	CityLogPK cityLogPK;
 
 }

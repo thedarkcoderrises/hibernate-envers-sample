@@ -1,14 +1,14 @@
 package com.tdcr.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
-@MappedSuperclass
-public class CityLogPK extends CityPK implements Serializable {
+@Embeddable
+public class CityLogPK extends CityPK{
 
-    @Id
     @Column(name = "REV")
     private int rev;
 }
