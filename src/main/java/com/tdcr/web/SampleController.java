@@ -30,6 +30,7 @@ import com.tdcr.service.CityService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.sql.Timestamp;
 
 @Controller
 public class SampleController {
@@ -68,6 +69,7 @@ public class SampleController {
 	public String changeCity() {
 		City updateCity = this.cityService.getCity("Oxford", "UK");
 		updateCity.setState("Oxfordshire");
+		updateCity.setUpdate(new Timestamp(System.currentTimeMillis()));
 		entityManager.persist(updateCity);
 		entityManager.flush();
 		return this.cityService.getCity("Oxford", "UK").toString();
@@ -87,7 +89,7 @@ public class SampleController {
 	@ResponseBody
 	@Transactional(readOnly = true)
 	public String addHotel() {
-		Hotel hotel = new Hotel(cityService.getCity("Bath", "UK"), "Bath hotel");
+		Hotel hotel = new Hotel(this.cityService.getCity("Oxford", "UK"), "Bath hotel");
 		entityManager.persist(hotel);
 		entityManager.flush();
 

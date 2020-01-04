@@ -19,21 +19,74 @@ package com.tdcr.domain;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
-import java.io.Serializable;
-import java.util.Random;
-
 import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Random;
 
 @Entity
 @Audited
 @AuditTable("CITY_LOG")
 @Table (name = "CITY")
-public class City extends BaseCityEnity implements Serializable {
+public class City implements Serializable {
 	@Transient
 	Random random = new Random();
 
 	@EmbeddedId
 	private CityPK cityPK;
+
+    @Column
+    @Audited(withModifiedFlag = true)
+    private String name;
+
+    @Audited(withModifiedFlag = true)
+    @Column
+    private String state;
+
+    @Column
+    private String country;
+
+    @Column
+    private String map;
+
+    @Column
+    private Timestamp insert;
+
+    @Column
+    private Timestamp update;
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
+    }
 
 
 	protected City() {
@@ -46,6 +99,8 @@ public class City extends BaseCityEnity implements Serializable {
 				,(""+name.charAt(0)+country.charAt(0)+"".toUpperCase()));
 		setName(name);
 		setCountry(country);
+		insert = new Timestamp(System.currentTimeMillis());
+		update = insert;
 	}
 
 	public Long getCityId() {
@@ -56,4 +111,16 @@ public class City extends BaseCityEnity implements Serializable {
 	public String toString() {
 		return getName() + "," + getState() + "," + getCountry();
 	}
+
+    public void setUpdate(Timestamp timestamp) {
+        this.update = timestamp;
+    }
+
+    public Timestamp getInsert() {
+        return insert;
+    }
+
+    public Timestamp getUpdate() {
+        return update;
+    }
 }

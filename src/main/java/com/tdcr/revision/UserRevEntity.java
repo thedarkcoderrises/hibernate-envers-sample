@@ -4,9 +4,7 @@ import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by tdcr on 7/30/15.
@@ -16,7 +14,7 @@ import javax.persistence.Id;
 public class UserRevEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue // TODO custom-sequence
     @RevisionNumber
     private int rev;
     @RevisionTimestamp
@@ -24,7 +22,14 @@ public class UserRevEntity {
 
     private String username;
 
-
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
+
+    public int getRev() {
+        return rev;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
 }
