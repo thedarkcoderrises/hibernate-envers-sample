@@ -16,6 +16,7 @@
 
 package com.tdcr.domain;
 
+import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
 import java.io.Serializable;
@@ -25,22 +26,14 @@ import javax.persistence.*;
 
 @Entity
 @Audited
-//@IdClass(CityPK.class)
+@AuditTable("CITY_LOG")
+@Table (name = "CITY")
 public class City implements Serializable {
 	@Transient
 	Random random = new Random();
 
-	/*private static final long serialVersionUID = 1L;
-	@Id
-	@Column(name = "city_id")
-	private Long cityId;
-
-	@Id
-	@Column(name = "city_code")
-	private String cityCode;*/
-
 	@EmbeddedId
-	CityPK cityPK;
+	private CityPK cityPK;
 
 	@Column
 	private String name;
@@ -62,7 +55,6 @@ public class City implements Serializable {
 
 		this.cityPK= new CityPK(Long.valueOf(random.ints(0,(50+1)).findFirst().getAsInt())
 				,(""+name.charAt(0)+country.charAt(0)+"".toUpperCase()));
-//		this.cityId = new CityPK(""+name.charAt(0)+country.charAt(0)+"".toUpperCase());
 		this.name = name;
 		this.country = country;
 	}
