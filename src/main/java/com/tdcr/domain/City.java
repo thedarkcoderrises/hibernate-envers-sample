@@ -55,6 +55,9 @@ public class City implements Serializable {
     @Column
     private Timestamp update;
 
+    @Column
+    private String action;
+
 
     public String getName() {
         return name;
@@ -122,5 +125,15 @@ public class City implements Serializable {
 
     public Timestamp getUpdate() {
         return update;
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void setAction(){
+        if(this.insert == this.update){
+            this.action ="I";
+        }else{
+            this.action ="U";
+        }
     }
 }

@@ -35,4 +35,7 @@ public class CityLog implements Serializable {
 	@Column
 	private Timestamp update;
 
+	@Column
+	private String action;
+
 }
