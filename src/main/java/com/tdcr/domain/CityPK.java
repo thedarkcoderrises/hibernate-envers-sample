@@ -1,10 +1,26 @@
 package com.tdcr.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
+
+@Embeddable
 public class CityPK implements Serializable {
 
+    @Column
     private Long cityId;
+
+    @Column
     private String cityCode;
+
+    public CityPK() {
+    }
+
+    public CityPK(Long cityId, String cityCode) {
+        super();
+        this.cityCode =cityCode;
+        this.cityId =cityId;
+    }
 
 
     public String getCityCode() {

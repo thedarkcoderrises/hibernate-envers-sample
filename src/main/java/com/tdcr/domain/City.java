@@ -25,22 +25,22 @@ import javax.persistence.*;
 
 @Entity
 @Audited
-@IdClass(CityPK.class)
+//@IdClass(CityPK.class)
 public class City implements Serializable {
 	@Transient
 	Random random = new Random();
 
-	private static final long serialVersionUID = 1L;
+	/*private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "city_id")
 	private Long cityId;
 
 	@Id
 	@Column(name = "city_code")
-	private String cityCode;
-/*
+	private String cityCode;*/
+
 	@EmbeddedId
-	CityPK cityId;*/
+	CityPK cityPK;
 
 	@Column
 	private String name;
@@ -60,15 +60,15 @@ public class City implements Serializable {
 	public City(String name, String country) {
 		super();
 
-		this.cityId= Long.valueOf(random.ints(0,(50+1)).findFirst().getAsInt());
-		this.cityCode = (""+name.charAt(0)+country.charAt(0)+"".toUpperCase());
+		this.cityPK= new CityPK(Long.valueOf(random.ints(0,(50+1)).findFirst().getAsInt())
+				,(""+name.charAt(0)+country.charAt(0)+"".toUpperCase()));
 //		this.cityId = new CityPK(""+name.charAt(0)+country.charAt(0)+"".toUpperCase());
 		this.name = name;
 		this.country = country;
 	}
 
 	public Long getCityId() {
-		return this.cityId;
+		return this.cityPK.getCityId();
 	}
 
 
@@ -91,9 +91,6 @@ public class City implements Serializable {
 	public String getMap() {
 		return this.map;
 	}
-
-
-
 
 
 	@Override
